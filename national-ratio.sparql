@@ -1,0 +1,31 @@
+#+BEGIN_SRC sparql :url http://statistics.gov.scot/sparql :format text/csv
+SELECT ?placeName ?year (SUM(?personCount) as ?population) (SUM(?2011) as ?count2011) ((?population/?count2011) AS ?growth)
+WHERE {
+  ?areaURI1 <http://statistics.gov.scot/def/hierarchy/best-fit#intermediate-zone> ?zoneURI .
+  ?areaURI2 <http://statistics.gov.scot/def/hierarchy/best-fit#intermediate-zone> ?zoneURI .
+  ?yearURI <http://www.w3.org/2000/01/rdf-schema#label> ?year .
+  ?zoneURI <http://statistics.data.gov.uk/def/statistical-geography#parentcode> ?councilURI .
+  ?councilURI <http://www.w3.org/2000/01/rdf-schema#label> ?placeName .
+  GRAPH <http://statistics.gov.scot/graph/population-estimates-current-geographic-boundaries> {
+    ?s <http://statistics.gov.scot/def/dimension/age> <http://statistics.gov.scot/def/concept/age/all> .
+    ?s <http://statistics.gov.scot/def/dimension/sex> <http://statistics.gov.scot/def/concept/sex/all> .
+    ?s <http://statistics.gov.scot/def/measure-properties/count> ?personCount .
+    ?s <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?yearURI .
+    ?s <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?areaURI1 .
+    ?s1 <http://statistics.gov.scot/def/dimension/age> <http://statistics.gov.scot/def/concept/age/all> .
+    ?s1 <http://statistics.gov.scot/def/dimension/sex> <http://statistics.gov.scot/def/concept/sex/all> .
+    ?s1 <http://statistics.gov.scot/def/measure-properties/count> ?2011 .
+    ?s1 <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> <http://reference.data.gov.uk/id/year/2011> .
+    ?s1 <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?areaURI2 .
+  }
+  VALUES ?placeName {
+    "Aberdeen City"
+    "City of Edinburgh"
+    "Dundee City"
+    "Glasgow City"
+    "Stirling"
+  }
+}
+GROUP BY ?placeName ?year
+ORDER BY ?placeName ?year
+#+END_SRC
