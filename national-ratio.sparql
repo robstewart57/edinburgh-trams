@@ -2,7 +2,6 @@
 SELECT ?placeName ?year (SUM(?personCount) as ?population) (SUM(?2011) as ?count2011) ((?population/?count2011) AS ?growth)
 WHERE {
   ?areaURI1 <http://statistics.gov.scot/def/hierarchy/best-fit#intermediate-zone> ?zoneURI .
-  ?areaURI2 <http://statistics.gov.scot/def/hierarchy/best-fit#intermediate-zone> ?zoneURI .
   ?yearURI <http://www.w3.org/2000/01/rdf-schema#label> ?year .
   ?zoneURI <http://statistics.data.gov.uk/def/statistical-geography#parentcode> ?councilURI .
   ?councilURI <http://www.w3.org/2000/01/rdf-schema#label> ?placeName .
@@ -16,7 +15,7 @@ WHERE {
     ?s1 <http://statistics.gov.scot/def/dimension/sex> <http://statistics.gov.scot/def/concept/sex/all> .
     ?s1 <http://statistics.gov.scot/def/measure-properties/count> ?2011 .
     ?s1 <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> <http://reference.data.gov.uk/id/year/2011> .
-    ?s1 <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?areaURI2 .
+    ?s1 <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?areaURI1 .
   }
   VALUES ?placeName {
     "Aberdeen City"
